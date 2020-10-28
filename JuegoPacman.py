@@ -7,6 +7,7 @@ path = Turtle(visible=False)
 writer = Turtle(visible=False)
 aim = vector(10, 0)
 pacman = vector(-40, 0)
+# Los fantasmas cuentan con una dirección diferente al aparecer.
 ghosts = [
     [vector(-180, 160), vector(0, 0)],
     [vector(-180, -160), vector(0, 0)],
@@ -14,6 +15,7 @@ ghosts = [
     [vector(100, -160), vector(0, 0)],
 ]
 
+# Nuevo mapa realizado.
 tiles = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0,
@@ -112,6 +114,7 @@ def move():
     goto(pacman.x + 10, pacman.y + 10)
     dot(20, 'yellow')
     
+    # Parte donde se hace que los fantasmas sean más "listos".
     i = -1
     for point, course in ghosts:
         i += 1
@@ -159,6 +162,7 @@ tracer(False)
 writer.goto(160, 160)
 writer.color('white')
 writer.write(state['score'])
+# Parte donde los fantasmas son más "listos" al tratar de atrapar al jugador.
 i = 0
 for point, course in ghosts:
     if (point.x < pacman.x) and (abs(point.x - pacman.x)<abs(point.y - pacman.y)):
