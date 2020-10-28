@@ -8,11 +8,12 @@ writer = Turtle(visible=False)
 aim = vector(5, 0)
 pacman = vector(-40, -80)
 ghosts = [
-    [vector(-180, 160), vector(5, 0)],
-    [vector(-180, -160), vector(0, 5)],
-    [vector(100, 160), vector(0, -5)],
-    [vector(100, -160), vector(-5, 0)],
+    [vector(-180, 160), vector(0, 0)],
+    [vector(-180, -160), vector(0, 0)],
+    [vector(100, 160), vector(0, 0)],
+    [vector(100, -160), vector(0, 0)],
 ]
+
 tiles = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
@@ -110,21 +111,30 @@ def move():
     up()
     goto(pacman.x + 10, pacman.y + 10)
     dot(20, 'yellow')
-
+    
+    i = -1
     for point, course in ghosts:
+        i += 1
+        
         if valid(point + course):
             point.move(course)
         else:
-            options = [
-                vector(5, 0),
-                vector(-5, 0),
-                vector(0, 5),
-                vector(0, -5),
-            ]
-            plan = choice(options)
-            course.x = plan.x
-            course.y = plan.y
-
+            if (point.x < pacman.x) and (abs(point.x - pacman.x)>abs(point.y - pacman.y)):
+                ghosts[i][1] = vector(5,0)
+            elif (point.x > pacman.x) and (abs(point.x - pacman.x)>abs(point.y - pacman.y)):
+                ghosts[i][1] = vector(-5,0)
+            elif (point.y < pacman.y) and (abs(point.x - pacman.x)<abs(point.y - pacman.y)):
+                ghosts[i][1] = vector(0,5)
+            elif (point.y > pacman.y)and (abs(point.x - pacman.x)<abs(point.y - pacman.y)):
+                ghosts[i][1] = vector(0,-5)
+            if ghosts[i][1] == course:
+                options = []
+                if(course.x != 0):
+                    options += [vector(0,5),vector(0,-5)]
+                else:
+                    options += [vector(5,0),vector(-5,0)]
+                ghosts[i][1] = choice(options)
+        
         up()
         goto(point.x + 10, point.y + 10)
         dot(20, 'red')
@@ -149,6 +159,17 @@ tracer(False)
 writer.goto(160, 160)
 writer.color('white')
 writer.write(state['score'])
+i = 0
+for point, course in ghosts:
+    if (point.x < pacman.x) and (abs(point.x - pacman.x)<abs(point.y - pacman.y)):
+        ghosts[i][1] = vector(5,0)
+    elif (point.x > pacman.x) and (abs(point.x - pacman.x)<abs(point.y - pacman.y)):
+        ghosts[i][1] = vector(-5,0)
+    elif (point.y < pacman.y)and (abs(point.x - pacman.x)>abs(point.y - pacman.y)):
+        ghosts[i][1] = vector(0,5)
+    elif (point.y > pacman.y)and (abs(point.x - pacman.x)>abs(point.y - pacman.y)):
+        ghosts[i][1] = vector(0,-5)
+    i += 1
 listen()
 onkey(lambda: change(5, 0), 'Right')
 onkey(lambda: change(-5, 0), 'Left')
