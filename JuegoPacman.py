@@ -5,8 +5,8 @@ from freegames import floor, vector
 state = {'score': 0}
 path = Turtle(visible=False)
 writer = Turtle(visible=False)
-aim = vector(5, 0)
-pacman = vector(-40, -80)
+aim = vector(10, 0)
+pacman = vector(-40, 0)
 ghosts = [
     [vector(-180, 160), vector(0, 0)],
     [vector(-180, -160), vector(0, 0)],
@@ -16,22 +16,22 @@ ghosts = [
 
 tiles = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0,
+    0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
-    0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0,
+    0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
     0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0,
-    0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0,
-    0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-    0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+    0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
-    0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0,
-    0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0,
-    0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
-    0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-    0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0,
-    0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0,
     0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0,
     0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+    0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+    0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0,
+    0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0,
     0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -120,19 +120,19 @@ def move():
             point.move(course)
         else:
             if (point.x < pacman.x) and (abs(point.x - pacman.x)>abs(point.y - pacman.y)):
-                ghosts[i][1] = vector(5,0)
+                ghosts[i][1] = vector(10,0)
             elif (point.x > pacman.x) and (abs(point.x - pacman.x)>abs(point.y - pacman.y)):
-                ghosts[i][1] = vector(-5,0)
+                ghosts[i][1] = vector(-10,0)
             elif (point.y < pacman.y) and (abs(point.x - pacman.x)<abs(point.y - pacman.y)):
-                ghosts[i][1] = vector(0,5)
+                ghosts[i][1] = vector(0,10)
             elif (point.y > pacman.y)and (abs(point.x - pacman.x)<abs(point.y - pacman.y)):
-                ghosts[i][1] = vector(0,-5)
+                ghosts[i][1] = vector(0,-10)
             if ghosts[i][1] == course:
                 options = []
                 if(course.x != 0):
-                    options += [vector(0,5),vector(0,-5)]
+                    options += [vector(0,10),vector(0,-10)]
                 else:
-                    options += [vector(5,0),vector(-5,0)]
+                    options += [vector(10,0),vector(-10,0)]
                 ghosts[i][1] = choice(options)
         
         up()
@@ -162,19 +162,19 @@ writer.write(state['score'])
 i = 0
 for point, course in ghosts:
     if (point.x < pacman.x) and (abs(point.x - pacman.x)<abs(point.y - pacman.y)):
-        ghosts[i][1] = vector(5,0)
+        ghosts[i][1] = vector(10,0)
     elif (point.x > pacman.x) and (abs(point.x - pacman.x)<abs(point.y - pacman.y)):
-        ghosts[i][1] = vector(-5,0)
+        ghosts[i][1] = vector(-10,0)
     elif (point.y < pacman.y)and (abs(point.x - pacman.x)>abs(point.y - pacman.y)):
-        ghosts[i][1] = vector(0,5)
+        ghosts[i][1] = vector(0,10)
     elif (point.y > pacman.y)and (abs(point.x - pacman.x)>abs(point.y - pacman.y)):
-        ghosts[i][1] = vector(0,-5)
+        ghosts[i][1] = vector(0,-10)
     i += 1
 listen()
-onkey(lambda: change(5, 0), 'Right')
-onkey(lambda: change(-5, 0), 'Left')
-onkey(lambda: change(0, 5), 'Up')
-onkey(lambda: change(0, -5), 'Down')
+onkey(lambda: change(10, 0), 'Right')
+onkey(lambda: change(-10, 0), 'Left')
+onkey(lambda: change(0, 10), 'Up')
+onkey(lambda: change(0, -10), 'Down')
 world()
 move()
 done()
