@@ -1,6 +1,7 @@
 from random import choice
 from turtle import *
-from freegames import floor, vector
+from freegames import floor 
+from freegames import vector
 
 state = {'score': 0}
 path = Turtle(visible=False)
@@ -39,7 +40,7 @@ tiles = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ]
 
-def square(x, y):
+def square(x, y):  # Función que dibuja un cuadradro (tablero) usando la ruta en (x,y).
     "Draw square using path at (x, y)."
     path.up()
     path.goto(x, y)
@@ -52,14 +53,14 @@ def square(x, y):
 
     path.end_fill()
 
-def offset(point):
+def offset(point):  # Función que devuelve el desplazamiento del punto en los mosaicos.
     "Return offset of point in tiles."
     x = (floor(point.x, 20) + 200) / 20
     y = (180 - floor(point.y, 20)) / 20
     index = int(x + y * 20)
     return index
 
-def valid(point):
+def valid(point):  # Función que devuelve True si el punto es válido en los mosaicos.
     "Return True if point is valid in tiles."
     index = offset(point)
 
@@ -73,7 +74,7 @@ def valid(point):
 
     return point.x % 20 == 0 or point.y % 20 == 0
 
-def world():
+def world():  # Función que dibuja el "mundo" usando la ruta.
     "Draw world using path."
     bgcolor('black')
     path.color('blue')
@@ -91,7 +92,7 @@ def world():
                 path.goto(x + 10, y + 10)
                 path.dot(2, 'white')
 
-def move():
+def move():  # Función que permite mover a pacman y todos los fantasmas.
     "Move pacman and all ghosts."
     writer.undo()
     writer.write(state['score'])
@@ -137,7 +138,7 @@ def move():
                 else:
                     options += [vector(10,0),vector(-10,0)]
                 ghosts[i][1] = choice(options)
-        
+
         up()
         goto(point.x + 10, point.y + 10)
         dot(20, 'red')
@@ -150,11 +151,11 @@ def move():
 
     ontimer(move, 100)
 
-def change(x, y):
-    "Change pacman aim if valid."
-    if valid(pacman + vector(x, y)):
-        aim.x = x
-        aim.y = y
+def change(x, y):  # Función que cambia el objetivo (dirección) de pacman si es válido.
+   "Change pacman aim if valid."
+   if valid(pacman + vector(x, y)):
+       aim.x = x
+       aim.y = y
 
 setup(420, 420, 370, 0)
 hideturtle()
@@ -162,7 +163,7 @@ tracer(False)
 writer.goto(160, 160)
 writer.color('white')
 writer.write(state['score'])
-# Parte donde los fantasmas son más "listos" al tratar de atrapar al jugador.
+# Parte donde los fantasmas son más "listos" al tratar de atrapar al jugador (pacman).
 i = 0
 for point, course in ghosts:
     if (point.x < pacman.x) and (abs(point.x - pacman.x)<abs(point.y - pacman.y)):
