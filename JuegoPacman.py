@@ -157,6 +157,7 @@ def change(x, y):  # Función que cambia el objetivo (dirección) de pacman si e
        aim.x = x
        aim.y = y
 
+# Parámetros del juego.
 setup(420, 420, 370, 0)
 hideturtle()
 tracer(False)
